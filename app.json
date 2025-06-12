@@ -4,11 +4,9 @@
     "slug": "snack-aa579b0a-1471-4357-acdc-c60ff86cadf5",
     "version": "1.0.0",
     "orientation": "portrait",
-
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,18 +15,21 @@
     },
     "android": {
       "adaptiveIcon": {
-
         "backgroundColor": "#ffffff"
       },
       "package": "com.jihennie.snackaa579b0a14714357acdcc60ff86cadf5"
     },
-    "web": {
-
-    },
+    "web": {},
     "extra": {
       "eas": {
         "projectId": "c35edae0-6c08-4117-abd2-f5f66dccd625"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/c35edae0-6c08-4117-abd2-f5f66dccd625"
     }
   }
 }
