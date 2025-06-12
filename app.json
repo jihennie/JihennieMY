@@ -11,7 +11,8 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.jihennie.snackaa579b0a14714357acdcc60ff86cadf5"
     },
     "android": {
       "adaptiveIcon": {
@@ -30,6 +31,9 @@
     },
     "updates": {
       "url": "https://u.expo.dev/c35edae0-6c08-4117-abd2-f5f66dccd625"
-    }
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }
