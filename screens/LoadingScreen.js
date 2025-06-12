@@ -11,14 +11,10 @@ export default function LoadingScreen({ navigation }) {
   }, [navigation]);
 
   return (
-    <View style={styles.container}>
-      <Image
-        source={{ uri: 'https://i.ibb.co/23VFJqb1/IMG-0352.jpg' }}
-        style={styles.logo}
-        resizeMode="contain"
-      />
-      <Text style={styles.title}>로딩화면</Text>
-    </View>
+  <View style={styles.container}>
+    {/* <Image source={{ uri: 'https://i.ibb.co/23VFJqb1/IMG-0352.jpg' }} style={styles.logo} /> */}
+    <Text style={styles.title}>로딩화면</Text>
+  </View>
   );
 }
 
