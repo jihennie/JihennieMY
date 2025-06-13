@@ -12,7 +12,7 @@ export default function LoadingScreen({ navigation }) {
 
   return (
   <View style={styles.container}>
-    {/* <Image source={{ uri: 'https://i.ibb.co/23VFJqb1/IMG-0352.jpg' }} style={styles.logo} /> */}
+    <Image source={require('../assets/IMG_0352.jpeg')} />
     <Text style={styles.title}>로딩화면</Text>
   </View>
   );

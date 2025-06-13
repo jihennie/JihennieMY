@@ -15,6 +15,7 @@
       "bundleIdentifier": "com.jihennie.snackaa579b0a14714357acdcc60ff86cadf5"
     },
     "android": {
+      "permissions": ["INTERNET", "VIBRATE", "NOTIFICATIONS"],
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
       },
