@@ -1,6 +1,6 @@
-// screens/RiskInputScreen.js
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Picker, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { Picker } from '@react-native-picker/picker'; // 추가한 경우
 
 export default function RiskInputScreen({ navigation }) {
   const [age, setAge] = useState('');
@@ -9,12 +9,17 @@ export default function RiskInputScreen({ navigation }) {
   const [bloodPressure, setBloodPressure] = useState('');
 
   const calculateRisk = () => {
-    const ageNum = parseInt(age);
-    const chol = parseInt(cholesterol);
-    const bp = parseInt(bloodPressure);
+    if (!age || !cholesterol || !bloodPressure) {
+      alert('모든 값을 입력해주세요.');
+      return;
+    }
+
+    const ageNum = parseInt(age, 10);
+    const chol = parseInt(cholesterol, 10);
+    const bp = parseInt(bloodPressure, 10);
 
     if (isNaN(ageNum) || isNaN(chol) || isNaN(bp)) {
-      alert('모든 값을 올바르게 입력해주세요.');
+      alert('숫자를 올바르게 입력해주세요.');
       return;
     }
 
@@ -29,7 +34,7 @@ export default function RiskInputScreen({ navigation }) {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
         <Text style={styles.title}>🧮 Framingham 위험도 계산</Text>
 
         <Text style={styles.label}>성별</Text>
@@ -43,31 +48,11 @@ export default function RiskInputScreen({ navigation }) {
         </Picker>
 
         <Text style={styles.label}>나이</Text>
-        <TextInput
-          style={styles.input}
-          keyboardType="numeric"
-          value={age}
-          onChangeText={setAge}
-          placeholder="예: 45"
-        />
-
+        <TextInput style={styles.input} keyboardType="numeric" value={age} onChangeText={setAge} placeholder="예: 45" />
         <Text style={styles.label}>총 콜레스테롤 (mg/dL)</Text>
-        <TextInput
-          style={styles.input}
-          keyboardType="numeric"
-          value={cholesterol}
-          onChangeText={setCholesterol}
-          placeholder="예: 200"
-        />
-
+        <TextInput style={styles.input} keyboardType="numeric" value={cholesterol} onChangeText={setCholesterol} placeholder="예: 200" />
         <Text style={styles.label}>수축기 혈압 (mmHg)</Text>
-        <TextInput
-          style={styles.input}
-          keyboardType="numeric"
-          value={bloodPressure}
-          onChangeText={setBloodPressure}
-          placeholder="예: 120"
-        />
+        <TextInput style={styles.input} keyboardType="numeric" value={bloodPressure} onChangeText={setBloodPressure} placeholder="예: 120" />
 
         <View style={styles.buttonContainer}>
           <Button title="위험도 계산하기 →" onPress={calculateRisk} color="#2563EB" />
@@ -84,17 +69,8 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
   },
-  title: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginBottom: 24,
-    textAlign: 'center',
-  },
-  label: {
-    marginBottom: 6,
-    fontWeight: '600',
-    marginTop: 12,
-  },
+  title: { fontSize: 22, fontWeight: 'bold', marginBottom: 24, textAlign: 'center' },
+  label: { marginBottom: 6, fontWeight: '600', marginTop: 12 },
   input: {
     borderWidth: 1,
     borderColor: '#d1d5db',
@@ -111,9 +87,5 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     backgroundColor: 'white',
   },
-  buttonContainer: {
-    marginTop: 24,
-    borderRadius: 8,
-    overflow: 'hidden',
-  },
+  buttonContainer: { marginTop: 24, borderRadius: 8, overflow: 'hidden' },
 });
