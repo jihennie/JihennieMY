@@ -58,6 +58,16 @@ export default function RiskInputScreen({ navigation }) {
           <Button title="위험도 계산하기 →" onPress={calculateRisk} color="#2563EB" />
         </View>
       </KeyboardAvoidingView>
+      {/* 개인정보 안내 문구 */}
+      <Text style={styles.privacyNotice}>
+        📘 개인정보 처리방침 {'\n'}
+        - 수집 항목: 심박수, 혈압, 활동량 등 {'\n'}
+        - 사용 목적: 건강 위험도 평가 및 관리 기능 제공 {'\n'}
+        - 제3자 제공: 없음 {'\n'}
+        - 보안 방법: 암호화된 저장 및 전송 {'\n'}
+        - 정보주체 권리: 열람, 수정, 삭제 요청 가능 {'\n'}
+        - 문의: support@yourapp.com
+      </Text>
     </ScrollView>
   );
 }
@@ -88,4 +98,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   buttonContainer: { marginTop: 24, borderRadius: 8, overflow: 'hidden' },
+  privacynotice: {
+     marginTop: 30,
+     fontSize: 12,
+     color: '#6b7280',
+     lineHeight: 20,
+     textAlign: 'left'
+  }
 });
