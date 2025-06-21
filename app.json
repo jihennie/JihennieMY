@@ -12,10 +12,14 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.jihennie.snackaa579b0a14714357acdcc60ff86cadf5"
+      "bundleIdentifier": "com.jihennie.snackaa579b0a14714357acdcc60ff86cadf5",
+      "infoPlist": {
+        "NSUserNotificationUsageDescription": "건강 상태 확인 및 약 복용 알림을 위해 알림 권한이 필요합니다."
+      }
     },
     "android": {
       "permissions": ["INTERNET", "VIBRATE", "NOTIFICATIONS"],
+      "useNextNotificationsApi": true,
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
       },
@@ -32,7 +36,8 @@
       "url": "https://u.expo.dev/c35edae0-6c08-4117-abd2-f5f66dccd625"
     },
     "plugins": [
-      "expo-font"
+      "expo-font",
+      "expo-notifications"
     ]
   }
 }

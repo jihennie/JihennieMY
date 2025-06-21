@@ -11,8 +11,8 @@ export default function LoadingScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/IMG_0352.jpeg')} style={styles.logo} resizeMode="contain" />
-      <Text style={styles.title}>로딩화면</Text>
+      <Image source={require('../assets/LoadingScreen.jpeg')} style={styles.logo} resizeMode="contain" />
+      <Text style={styles.title}>loading screen</Text>
     </View>
   );
 }

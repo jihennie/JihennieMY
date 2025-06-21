@@ -5,12 +5,25 @@ import { Ionicons } from '@expo/vector-icons';
 
 export default function HealthCareGuidelinesScreen({ navigation }) {
   const tips = [
-    "매일 30분 이상 걷기 운동을 하세요.",
-    "가공식품보다 신선한 야채와 과일을 섭취하세요.",
-    "담배와 술은 건강에 해로우니 피하는 것이 좋습니다.",
-    "수면은 하루 7~8시간 충분히 취하세요.",
-    "정기적인 건강검진을 받으세요.",
-    "스트레스를 줄이는 명상이나 취미 활동을 하세요.",
+    "🫀What is cardiovascular disease (CVD)?", 
+    "Cardiovascular disease (CVD) refers to all diseases that occur in the heart and blood vessels.", 
+    "Representative examples include myocardial infarction, stroke, hypertension, and angina.",
+    "",
+    "⚠️Be especially careful of these people!", 
+    "- People with high blood pressure",
+    "- People with high cholesterol", 
+    "- People with diabetes", 
+    "- People who smoke", 
+    "- People with a history of heart disease in their family",
+    "- People who rarely exercise", 
+    "",
+    "✅How can I prevent it?",
+    "- Eat lightly (don't eat salty food)",
+    "- Walk for about 30 minutes a day",
+    "- Quit smoking",
+    "- Reduce stress, get enough sleep",
+    "- Go to the hospital for a checkup at least once a year!",
+    "- If you change little by little, you can keep your heart healthy for a long time.",
   ];
 
   return (

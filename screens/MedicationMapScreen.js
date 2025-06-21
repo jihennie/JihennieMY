@@ -4,6 +4,7 @@ import { View, Text, TextInput, Button, FlatList, StyleSheet, TouchableOpacity, 
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
+import { requestNotificationPermission, scheduleWeeklyHealthCheck } from '../utils/notifications';
 
 export default function MedicationMapScreen({ navigation }) {
   const [medName, setMedName] = useState('');
@@ -12,8 +13,12 @@ export default function MedicationMapScreen({ navigation }) {
   const [showPicker, setShowPicker] = useState(false);
 
   useEffect(() => {
-    registerForPushNotificationsAsync();
-  }, []);
+  const setupNotifications = async () => {
+    await requestNotificationPermission();
+    await scheduleWeeklyHealthCheck();
+  };
+  setupNotifications();
+}, []);
 
   const registerForPushNotificationsAsync = async () => {
     if (Device.isDevice) {
