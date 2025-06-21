@@ -16,24 +16,24 @@ export default function ConsentScreen({ navigation }) {
     if (agreed) {
       navigation.replace('Loading'); // 동의하면 다음 화면으로
     } else {
-      Alert.alert('동의 필요', '계속하려면 동의해 주세요.');
+      Alert.alert('Consent Required', 'Please agree to continue.');
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>개인정보 수집 및 권리 안내</Text>
+      <Text style={styles.title}>Consent to Personal Data Collection</Text>
       <Text style={styles.description}>
-        사용자의 개인 정보 수집 및 어플의 권리{'\n'}
-        (개인 건강 데이터를 언제든지 보고, 수정하고, 삭제할 수 있는 기본적인 권리)
+        This app collects personal health information.{'\n'}
+        You have full rights to view, edit, and delete your data at any time.
       </Text>
 
       <TouchableOpacity onPress={() => setAgreed(!agreed)} style={styles.checkboxContainer}>
         <View style={[styles.checkbox, agreed && styles.checkboxChecked]} />
-        <Text style={styles.checkboxLabel}>동의합니다</Text>
+        <Text style={styles.checkboxLabel}>I Agree</Text>
       </TouchableOpacity>
 
-      <Button title="계속하기" onPress={handleContinue} />
+      <Button title="Continue" onPress={handleContinue} />
     </View>
   );
 }

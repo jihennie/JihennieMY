@@ -55,16 +55,18 @@ export default function MedicationMapScreen({ navigation }) {
     }
   };
 
-  // 테스트용 알림 (10초 후)
+  // 알림 설정
   const scheduleNotification = async (name, date) => {
     const trigger = {
-      seconds: 10, // 실제 배포 시엔 hour/minute + repeats:true 사용
+      hour: date.getHours(),
+      minute: date.getMinutes(),
+      repeats: true, // ✅ 매일 반복
     };
 
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: '약 복용 알림',
-        body: `${name} 복용 시간입니다!`,
+        title: 'Medication Reminder',
+        body: `It's time to take ${name}!`,
       },
       trigger,
     });
@@ -86,7 +88,7 @@ export default function MedicationMapScreen({ navigation }) {
     setMedName('');
     setMedTime(new Date());
 
-    await scheduleNotification(newMed.name, medTime);
+    await scheduleNotification(newMed.name, medTime); // ✅ 알림 설정
   };
 
   const removeMedication = async (id) => {
@@ -101,10 +103,10 @@ export default function MedicationMapScreen({ navigation }) {
         <Text style={styles.backText}>←</Text>
       </TouchableOpacity>
 
-      <Text style={styles.title}>Set medication alarm</Text>
+      <Text style={styles.title}>Set Medication Alarm</Text>
 
       <TextInput
-        placeholder="약 이름"
+        placeholder="Medication Name"
         style={styles.input}
         value={medName}
         onChangeText={setMedName}
@@ -112,7 +114,7 @@ export default function MedicationMapScreen({ navigation }) {
 
       <TouchableOpacity onPress={() => setShowPicker(true)} style={styles.timeButton}>
         <Text style={styles.timeText}>
-          복용 시간: {medTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+          Time to take: {medTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
         </Text>
       </TouchableOpacity>
 
@@ -129,7 +131,7 @@ export default function MedicationMapScreen({ navigation }) {
         />
       )}
 
-      <Button title="복약 추가" onPress={addMedication} />
+      <Button title="Add Medication" onPress={addMedication} />
 
       <FlatList
         data={medications}
@@ -138,7 +140,7 @@ export default function MedicationMapScreen({ navigation }) {
           <View style={styles.medItem}>
             <Text>{item.name} - {item.time}</Text>
             <TouchableOpacity onPress={() => removeMedication(item.id)}>
-              <Text style={styles.delete}>삭제</Text>
+              <Text style={styles.delete}>Delete</Text>
             </TouchableOpacity>
           </View>
         )}

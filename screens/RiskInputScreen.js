@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
-import { Picker } from '@react-native-picker/picker'; // 추가한 경우
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView
+} from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 
 export default function RiskInputScreen({ navigation }) {
   const [age, setAge] = useState('');
@@ -10,7 +19,7 @@ export default function RiskInputScreen({ navigation }) {
 
   const calculateRisk = () => {
     if (!age || !cholesterol || !bloodPressure) {
-      alert('모든 값을 입력해주세요.');
+      alert('Please fill in all fields.');
       return;
     }
 
@@ -19,7 +28,7 @@ export default function RiskInputScreen({ navigation }) {
     const bp = parseInt(bloodPressure, 10);
 
     if (isNaN(ageNum) || isNaN(chol) || isNaN(bp)) {
-      alert('숫자를 올바르게 입력해주세요.');
+      alert('Please enter valid numbers.');
       return;
     }
 
@@ -33,54 +42,89 @@ export default function RiskInputScreen({ navigation }) {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
-        <Text style={styles.title}>🧮 Framingham 위험도 계산</Text>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
+    >
+      <ScrollView
+        contentContainerStyle={styles.container}
+        keyboardShouldPersistTaps="handled"
+      >
+        <Text style={styles.title}>🧮 Framingham Risk Score</Text>
 
-        <Text style={styles.label}>성별</Text>
+        <Text style={styles.label}>Gender</Text>
         <Picker
           selectedValue={gender}
           onValueChange={(value) => setGender(value)}
           style={styles.picker}
         >
-          <Picker.Item label="남성" value="male" />
-          <Picker.Item label="여성" value="female" />
+          <Picker.Item label="Male" value="male" />
+          <Picker.Item label="Female" value="female" />
         </Picker>
 
-        <Text style={styles.label}>나이</Text>
-        <TextInput style={styles.input} keyboardType="numeric" value={age} onChangeText={setAge} placeholder="예: 45" />
-        <Text style={styles.label}>총 콜레스테롤 (mg/dL)</Text>
-        <TextInput style={styles.input} keyboardType="numeric" value={cholesterol} onChangeText={setCholesterol} placeholder="예: 200" />
-        <Text style={styles.label}>수축기 혈압 (mmHg)</Text>
-        <TextInput style={styles.input} keyboardType="numeric" value={bloodPressure} onChangeText={setBloodPressure} placeholder="예: 120" />
+        <Text style={styles.label}>Age</Text>
+        <TextInput
+          style={styles.input}
+          keyboardType="numeric"
+          value={age}
+          onChangeText={setAge}
+          placeholder="e.g. 45"
+        />
+
+        <Text style={styles.label}>Total Cholesterol (mg/dL)</Text>
+        <TextInput
+          style={styles.input}
+          keyboardType="numeric"
+          value={cholesterol}
+          onChangeText={setCholesterol}
+          placeholder="e.g. 200"
+        />
+
+        <Text style={styles.label}>Systolic Blood Pressure (mmHg)</Text>
+        <TextInput
+          style={styles.input}
+          keyboardType="numeric"
+          value={bloodPressure}
+          onChangeText={setBloodPressure}
+          placeholder="e.g. 120"
+        />
 
         <View style={styles.buttonContainer}>
-          <Button title="위험도 계산하기 →" onPress={calculateRisk} color="#2563EB" />
+          <Button title="Calculate Risk →" onPress={calculateRisk} color="#2563EB" />
         </View>
-      </KeyboardAvoidingView>
-      {/* 개인정보 안내 문구 */}
-      <Text style={styles.privacyNotice}>
-        📘 개인정보 처리방침 {'\n'}
-        - 수집 항목: 심박수, 혈압, 활동량 등 {'\n'}
-        - 사용 목적: 건강 위험도 평가 및 관리 기능 제공 {'\n'}
-        - 제3자 제공: 없음 {'\n'}
-        - 보안 방법: 암호화된 저장 및 전송 {'\n'}
-        - 정보주체 권리: 열람, 수정, 삭제 요청 가능 {'\n'}
-        - 문의: support@yourapp.com
-      </Text>
-    </ScrollView>
+
+        <Text style={styles.privacyNotice}>
+          📘 Privacy Policy {'\n'}
+          - Collected items: heart rate, blood pressure, activity data, etc. {'\n'}
+          - Purpose: Health risk assessment and management features {'\n'}
+          - Third-party sharing: None {'\n'}
+          - Security: Encrypted storage and transmission {'\n'}
+          - Rights: View, edit, or delete your data at any time {'\n'}
+          - Contact: a01071604586@gmail.com
+        </Text>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flexGrow: 1,
     padding: 20,
     backgroundColor: '#f9fafb',
-    flexGrow: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
-  title: { fontSize: 22, fontWeight: 'bold', marginBottom: 24, textAlign: 'center' },
-  label: { marginBottom: 6, fontWeight: '600', marginTop: 12 },
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 24,
+    textAlign: 'center',
+  },
+  label: {
+    marginBottom: 6,
+    fontWeight: '600',
+    marginTop: 12,
+  },
   input: {
     borderWidth: 1,
     borderColor: '#d1d5db',
@@ -97,12 +141,18 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     backgroundColor: 'white',
   },
-  buttonContainer: { marginTop: 24, borderRadius: 8, overflow: 'hidden' },
-  privacynotice: {
-     marginTop: 30,
-     fontSize: 12,
-     color: '#6b7280',
-     lineHeight: 20,
-     textAlign: 'left'
-  }
+  buttonContainer: {
+    marginTop: 24,
+    marginBottom: 20,
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+  privacyNotice: {
+    marginTop: 20,
+    marginBottom: 40,
+    fontSize: 12,
+    color: '#6b7280',
+    lineHeight: 20,
+    textAlign: 'left',
+  },
 });

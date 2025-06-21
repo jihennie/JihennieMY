@@ -33,13 +33,13 @@ export default function CheckingHealthScreen({ navigation }) {
     const newHistory = [...history, entry];
     setHistory(newHistory);
     await AsyncStorage.setItem('healthData', JSON.stringify(newHistory));
-    Alert.alert('저장됨', '건강 데이터가 저장되었습니다.');
+    Alert.alert('Saved', 'Your health data has been saved.');
   };
 
   const clearData = async () => {
     await AsyncStorage.removeItem('healthData');
     setHistory([]);
-    Alert.alert('초기화 완료', '모든 건강 데이터를 삭제했습니다.');
+    Alert.alert('Cleared', 'All health data has been deleted.');
   };
 
   const recentData = history.slice(-4);
@@ -47,32 +47,32 @@ export default function CheckingHealthScreen({ navigation }) {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Ionicons name="arrow-back" size={24} onPress={() => navigation.goBack()} />
-      <Text style={styles.title}>📋 건강 상태 체크</Text>
+      <Text style={styles.title}>📋 Health Check</Text>
 
-      <Text style={styles.label}>키 (cm)</Text>
+      <Text style={styles.label}>Height (cm)</Text>
       <TextInput style={styles.input} keyboardType="numeric" value={height} onChangeText={setHeight} />
 
-      <Text style={styles.label}>몸무게 (kg)</Text>
+      <Text style={styles.label}>Weight (kg)</Text>
       <TextInput style={styles.input} keyboardType="numeric" value={weight} onChangeText={setWeight} />
 
-      <Text style={styles.label}>운동 횟수 (주당)</Text>
+      <Text style={styles.label}>Exercise Frequency (per week)</Text>
       <TextInput style={styles.input} keyboardType="numeric" value={exercise} onChangeText={setExercise} />
 
-      <Text style={styles.label}>혈당 (mg/dL)</Text>
+      <Text style={styles.label}>Blood Sugar (mg/dL)</Text>
       <TextInput style={styles.input} keyboardType="numeric" value={bloodSugar} onChangeText={setBloodSugar} />
 
-      <Button title="데이터 저장" onPress={saveData} />
+      <Button title="Save Data" onPress={saveData} />
       <View style={{ marginTop: 10 }} />
-      <Button title="데이터 초기화" color="red" onPress={clearData} />
+      <Button title="Clear Data" color="red" onPress={clearData} />
 
       {recentData.length > 1 && (
         <>
-          <Text style={styles.chartTitle}>최근 건강 변화</Text>
+          <Text style={styles.chartTitle}>Recent Health Trends</Text>
           <LineChart
             data={{
               labels: recentData.map(d => new Date(d.date).toLocaleDateString()),
               datasets: [
-                { data: recentData.map(d => d.weight), color: () => 'rgba(255,99,132,1)', strokeWidth: 2, label: '몸무게' },
+                { data: recentData.map(d => d.weight), color: () => 'rgba(255,99,132,1)', strokeWidth: 2, label: 'Weight' },
               ],
             }}
             width={Dimensions.get('window').width - 40}

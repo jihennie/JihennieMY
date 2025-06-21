@@ -12,7 +12,7 @@ export default function LoadingScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Image source={require('../assets/LoadingScreen.jpeg')} style={styles.logo} resizeMode="contain" />
-      <Text style={styles.title}>loading screen</Text>
+      <Text style={styles.title}>LOADING</Text>
     </View>
   );
 }
