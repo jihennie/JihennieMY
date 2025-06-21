@@ -1,10 +1,23 @@
 // screens/MedicationMapScreen.js
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, FlatList, StyleSheet, TouchableOpacity, Platform } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  Platform
+} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
-import { requestNotificationPermission, scheduleWeeklyHealthCheck } from '../utils/notifications';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  requestNotificationPermission,
+  scheduleWeeklyHealthCheck
+} from '../utils/notifications';
 
 export default function MedicationMapScreen({ navigation }) {
   const [medName, setMedName] = useState('');
@@ -13,27 +26,39 @@ export default function MedicationMapScreen({ navigation }) {
   const [showPicker, setShowPicker] = useState(false);
 
   useEffect(() => {
-  const setupNotifications = async () => {
-    await requestNotificationPermission();
-    await scheduleWeeklyHealthCheck();
-  };
-  setupNotifications();
-}, []);
+    const setup = async () => {
+      await requestNotificationPermission();
+      await scheduleWeeklyHealthCheck();
+      await loadMedications(); // ✅ 복약 리스트 불러오기
+    };
+    setup();
+  }, []);
 
-  const registerForPushNotificationsAsync = async () => {
-    if (Device.isDevice) {
-      const { status } = await Notifications.requestPermissionsAsync();
-      if (status !== 'granted') {
-        alert('푸시 알림 권한이 필요합니다.');
-      }
+  // 복약 리스트 저장
+  const saveMedications = async (data) => {
+    try {
+      await AsyncStorage.setItem('medications', JSON.stringify(data));
+    } catch (e) {
+      console.error('💥 저장 실패:', e);
     }
   };
 
+  // 복약 리스트 불러오기
+  const loadMedications = async () => {
+    try {
+      const saved = await AsyncStorage.getItem('medications');
+      if (saved) {
+        setMedications(JSON.parse(saved));
+      }
+    } catch (e) {
+      console.error('💥 불러오기 실패:', e);
+    }
+  };
+
+  // 테스트용 알림 (10초 후)
   const scheduleNotification = async (name, date) => {
     const trigger = {
-      hour: date.getHours(),
-      minute: date.getMinutes(),
-      repeats: true, // 매일 반복
+      seconds: 10, // 실제 배포 시엔 hour/minute + repeats:true 사용
     };
 
     await Notifications.scheduleNotificationAsync({
@@ -54,15 +79,20 @@ export default function MedicationMapScreen({ navigation }) {
       time: medTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
 
-    setMedications([...medications, newMed]);
+    const updatedList = [...medications, newMed];
+    setMedications(updatedList);
+    await saveMedications(updatedList); // ✅ 저장
+
     setMedName('');
     setMedTime(new Date());
 
     await scheduleNotification(newMed.name, medTime);
   };
 
-  const removeMedication = (id) => {
-    setMedications(medications.filter((med) => med.id !== id));
+  const removeMedication = async (id) => {
+    const updated = medications.filter((med) => med.id !== id);
+    setMedications(updated);
+    await saveMedications(updated); // ✅ 저장
   };
 
   return (
@@ -81,7 +111,9 @@ export default function MedicationMapScreen({ navigation }) {
       />
 
       <TouchableOpacity onPress={() => setShowPicker(true)} style={styles.timeButton}>
-        <Text style={styles.timeText}>복용 시간: {medTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</Text>
+        <Text style={styles.timeText}>
+          복용 시간: {medTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+        </Text>
       </TouchableOpacity>
 
       {showPicker && (
