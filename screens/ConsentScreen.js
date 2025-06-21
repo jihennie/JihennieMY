@@ -14,17 +14,21 @@ export default function ConsentScreen({ navigation }) {
   const [agreed, setAgreed] = useState(false);
 
   const handleContinue = async () => {
-    if (agreed) {
-      try {
-        await AsyncStorage.setItem('consentGiven', 'true');
-        navigation.replace('Loading');
-      } catch (e) {
-        Alert.alert('오류', '동의 상태 저장에 실패했습니다.');
-      }
-    } else {
-      Alert.alert('동의 필요', '계속하려면 동의해 주세요.');
+  if (agreed) {
+    try {
+      console.log('🟢 저장 시작');
+      await AsyncStorage.setItem('consentGiven', 'true');
+      console.log('✅ 저장 성공');
+      navigation.replace('Loading');
+    } catch (e) {
+      console.log('❌ AsyncStorage 오류:', e);
+      Alert.alert('오류', '동의 상태 저장에 실패했습니다.');
     }
-  };
+  } else {
+    Alert.alert('동의 필요', '계속하려면 동의해 주세요.');
+  }
+};
+
 
   return (
     <View style={styles.container}>
