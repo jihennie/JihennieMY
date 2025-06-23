@@ -48,6 +48,12 @@ export default function RiskResultScreen({ route, navigation }) {
       <Text style={styles.percent}>{risk.toFixed(1)}%</Text>
       <Text style={styles.level}>{riskLevel}</Text>
 
+      {riskLevel === 'High Risk' && (
+        <Text style={styles.warning}>
+          ⚠️ You are identified as high risk. Please visit a nearby hospital for professional care.
+        </Text>
+      )}
+
       <View style={styles.buttons}>
         <TouchableOpacity onPress={() => navigation.navigate('CheckingHealth')}>
           <Text style={styles.link}>→ Check My Health</Text>
@@ -72,4 +78,14 @@ const styles = StyleSheet.create({
   level: { fontSize: 20, marginVertical: 10, color: '#555' },
   buttons: { marginTop: 30, alignItems: 'center', gap: 12 },
   link: { fontSize: 16, color: '#2563eb', fontWeight: 'bold' },
+  warning: {
+    marginTop: 20,
+    fontSize: 16,
+    color: '#b91c1c',
+    textAlign: 'center',
+    fontWeight: '600',
+    backgroundColor: '#fee2e2',
+    padding: 10,
+    borderRadius: 8,
+  },
 });
